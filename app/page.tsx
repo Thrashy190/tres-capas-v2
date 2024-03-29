@@ -1,14 +1,26 @@
-import { getItems, searchItem } from "@/utils/supabase/functions";
+"use client";
+
+import { searchItem } from "@/utils/supabase/functions";
+import { useEffect, useState } from "react";
 import Table from "@/components/Table";
 
-export default async function Products({
+export default function Products({
   params,
   searchParams,
 }: {
   params: { slug: string };
   searchParams?: { [key: string]: string | undefined };
 }) {
-  const products = await searchItem(searchParams?.name || "");
+  const [products, setProducts] = useState<any[] | null>(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const response = await searchItem(searchParams?.name || "");
+      setProducts(response);
+    };
+
+    fetchProducts();
+  }, [searchParams]);
 
   if (!products) {
     return <h1>Loading...</h1>;

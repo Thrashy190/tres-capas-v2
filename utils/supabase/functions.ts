@@ -1,4 +1,4 @@
-import { supabase } from "@/utils/supabase/server";
+import { supabase } from "@/utils/supabase/client";
 import Product from "@/interfaces/product";
 
 async function getItems(): Promise<Product[]> {
